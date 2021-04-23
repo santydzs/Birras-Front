@@ -1,23 +1,27 @@
 import React, {useState} from 'react'
 import Login from './Components/Login/Login';
-import {loginFetch} from './Apis/Login';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Register from './Components/Register/Register'
 import {AppContext} from './Contexts/AppContext'
+import Main from './Components/Main/Main'
 
 function App() {
+  const [auth, setAuth] = useState({});
 
   return (
-    <AppContext.Provider>
+    <AppContext.Provider value={auth}>
       <Router>
         
 
         <Switch>
+            <Route path="/main">
+              <Main />
+            </Route>
             <Route path="/register">
-              <Register />
+              <Register setAuth={setAuth}/>
             </Route>
             <Route path="/">
-              <Login loginApi={loginFetch}></Login>
+              <Login setAuth={setAuth}></Login>
             </Route>
         </Switch>
       </Router>

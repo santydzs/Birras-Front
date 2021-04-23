@@ -2,20 +2,22 @@ import React, { useState } from 'react'
 import Grid from '@material-ui/core/Grid';
 import { TextField, Button } from '@material-ui/core';
 import { useHistory } from "react-router-dom";
+import {loginFetch} from '../../Apis/Auth';
 
-const Login = ({loginApi}) => {
+const Login = ({setAuth}) => {
     const [user, setUser] = useState("");
     const [pass, setPass] = useState("");
 
     let history = useHistory();
 
     const callapi = () => {
-        var promise = loginApi(user, pass);
+        let promise = loginFetch(user, pass);
 
-        promise.then(resp => console.log(resp));
+        promise.then(resp => resp.json().then(data => {
+            setAuth(data);
+            history.push('/main');
+        }));
         promise.catch(error => console.log(error));
-
-        console.log(user, pass);
     };
 
     return (
