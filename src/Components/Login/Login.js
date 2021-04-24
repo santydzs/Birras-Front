@@ -15,6 +15,7 @@ const Login = ({setAuth}) => {
 
         promise.then(resp => resp.json().then(data => {
             setAuth(data);
+            console.log(data);
             history.push('/main');
         }));
         promise.catch(error => console.log(error));
